@@ -1,6 +1,8 @@
 package cc.openframeworks;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,38 +11,48 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 public class OFAndroidGPS extends OFAndroidObject implements LocationListener, SensorEventListener {
-	
+
 	private static OFAndroidGPS m_instance = null;
-	
+
 	private boolean m_gpsStarted;
 	private boolean m_compassStarted;
-	
+
 	float[] m_currentGravityData;
 	float[] m_currentGeomagneticData;
 
 	boolean m_didReportLocation;
-	
-	private static OFAndroidGPS getInstance()
-	{
-		if(m_instance == null)
+
+	private static OFAndroidGPS getInstance() {
+		if (m_instance == null)
 			m_instance = new OFAndroidGPS();
-		
+
 		return m_instance;
 	}
-	
-	void startGPS(){
-		
-		OFAndroidObject.activity.runOnUiThread(new Runnable(){
-			public void run(){
-				
+
+	void startGPS() {
+
+		OFAndroidObject.activity.runOnUiThread(new Runnable() {
+			public void run() {
+
 				m_didReportLocation = false;
-				
+
 				// Acquire a reference to the system Location Manager
 				LocationManager locationManager = (LocationManager) OFAndroidObject.activity.getSystemService(Context.LOCATION_SERVICE);
-				
+
 				// Register the listener with the Location Manager to receive location updates
+				if (ActivityCompat.checkSelfPermission(OFAndroidObject.activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(OFAndroidObject.activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+					// TODO: Consider calling
+					//    ActivityCompat#requestPermissions
+					// here to request the missing permissions, and then overriding
+					//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+					//                                          int[] grantResults)
+					// to handle the case where the user grants the permission. See the documentation
+					// for ActivityCompat#requestPermissions for more details.
+					return;
+				}
 				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, OFAndroidGPS.this);
 				
 				// Register the listener with the Location Manager to receive location updates
