@@ -59,13 +59,13 @@ SetTimeoutReceive()
 	#include <unistd.h>
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
-	#include <sys/timeb.h>
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/time.h>
 	#include <sys/ioctl.h>
 
 #ifndef TARGET_ANDROID
+	#include <sys/timeb.h>
 	#include <sys/signal.h>
 #else
 	#include <signal.h>
