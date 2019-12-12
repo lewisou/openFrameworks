@@ -365,7 +365,7 @@ public:
 
 protected:
 	/// \cond INTERNAL
-	
+	virtual bool setTexAtlas(int w, int h, ofPixels pixels);
 	bool bLoadedOk;
 	
 	std::vector <ofPath> charOutlines;

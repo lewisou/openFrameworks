@@ -361,11 +361,11 @@ static std::string linuxFontPathByName(const std::string& fontname){
 
 //-----------------------------------------------------------
 static bool loadFontFace(const std::filesystem::path& _fontname, FT_Face & face, std::filesystem::path & filename){
-	std::filesystem::path fontname = _fontname;
 	filename = ofToDataPath(_fontname,true);
 	ofFile fontFile(filename,ofFile::Reference);
 	int fontID = 0;
 	if(!fontFile.exists()){
+		std::filesystem::path fontname = _fontname;
 #ifdef TARGET_LINUX
         filename = linuxFontPathByName(fontname.string());
 #elif defined(TARGET_OSX)
@@ -404,7 +404,7 @@ static bool loadFontFace(const std::filesystem::path& _fontname, FT_Face & face,
 		// simple error table in lieu of full table (see fterrors.h)
 		string errorString = "unknown freetype";
 		if(err == 1) errorString = "INVALID FILENAME";
-		ofLogError("ofTrueTypeFont") << "loadFontFace(): couldn't create new face for \"" << fontname << "\": FT_Error " << err << " " << errorString;
+		ofLogError("ofTrueTypeFont") << "loadFontFace(): couldn't create new face for \"" << _fontname << "\": FT_Error " << err << " " << errorString;
 		return false;
 	}
 
@@ -461,21 +461,21 @@ ofTrueTypeFont::ofTrueTypeFont()
 
 //------------------------------------------------------------------
 ofTrueTypeFont::~ofTrueTypeFont(){
-	#if defined(TARGET_ANDROID)
-	ofRemoveListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-	ofRemoveListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	#endif
+//	#if defined(TARGET_ANDROID)
+//	ofRemoveListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//	ofRemoveListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	#endif
 }
 
 //------------------------------------------------------------------
 ofTrueTypeFont::ofTrueTypeFont(const ofTrueTypeFont& mom)
 :settings(mom.settings){
-#if defined(TARGET_ANDROID)
-	if(mom.isLoaded()){
-		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	}
-#endif
+//#if defined(TARGET_ANDROID)
+//	if(mom.isLoaded()){
+//		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	}
+//#endif
 	bLoadedOk = mom.bLoadedOk;
 
 	charOutlines = mom.charOutlines;
@@ -501,12 +501,12 @@ ofTrueTypeFont::ofTrueTypeFont(const ofTrueTypeFont& mom)
 //------------------------------------------------------------------
 ofTrueTypeFont & ofTrueTypeFont::operator=(const ofTrueTypeFont& mom){
 	if(this == &mom) return *this;
-#if defined(TARGET_ANDROID)
-	if(mom.isLoaded()){
-		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	}
-#endif
+//#if defined(TARGET_ANDROID)
+//	if(mom.isLoaded()){
+//		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	}
+//#endif
 	settings = mom.settings;
 	bLoadedOk = mom.bLoadedOk;
 
@@ -535,12 +535,12 @@ ofTrueTypeFont & ofTrueTypeFont::operator=(const ofTrueTypeFont& mom){
 //------------------------------------------------------------------
 ofTrueTypeFont::ofTrueTypeFont(ofTrueTypeFont&& mom)
 :settings(std::move(mom.settings)){
-#if defined(TARGET_ANDROID)
-	if(mom.isLoaded()){
-		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	}
-#endif
+//#if defined(TARGET_ANDROID)
+//	if(mom.isLoaded()){
+//		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	}
+//#endif
 	bLoadedOk = mom.bLoadedOk;
 
 	charOutlines = std::move(mom.charOutlines);
@@ -566,12 +566,12 @@ ofTrueTypeFont::ofTrueTypeFont(ofTrueTypeFont&& mom)
 //------------------------------------------------------------------
 ofTrueTypeFont & ofTrueTypeFont::operator=(ofTrueTypeFont&& mom){
 	if(this == &mom) return *this;
-#if defined(TARGET_ANDROID)
-	if(mom.isLoaded()){
-		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	}
-#endif
+//#if defined(TARGET_ANDROID)
+//	if(mom.isLoaded()){
+//		ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//		ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	}
+//#endif
 	bLoadedOk = mom.bLoadedOk;
 
 	charOutlines = std::move(mom.charOutlines);
@@ -698,10 +698,10 @@ bool ofTrueTypeFont::load(const std::filesystem::path& filename, int fontSize, b
 }
 
 bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
-	#if defined(TARGET_ANDROID)
-	ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
-	ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
-	#endif
+//	#if defined(TARGET_ANDROID)
+//	ofAddListener(ofxAndroidEvents().unloadGL,this,&ofTrueTypeFont::unloadTextures);
+//	ofAddListener(ofxAndroidEvents().reloadGL,this,&ofTrueTypeFont::reloadTextures);
+//	#endif
 
 	initLibraries();
 	settings = _settings;
@@ -750,6 +750,8 @@ bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
 	}
 
 	vector<ofTrueTypeFont::glyph> all_glyphs;
+	all_glyphs.reserve(nGlyphs);
+    int border2 = border*2;
 
 	uint32_t areaSum=0;
 
@@ -761,7 +763,7 @@ bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
 			all_glyphs[i].props.characterIndex	= i;
 			glyphIndexMap[g] = i;
 			cps[i] = all_glyphs[i].props;
-			areaSum += (cps[i].tW+border*2)*(cps[i].tH+border*2);
+			areaSum += (cps[i].tW+border2)*(cps[i].tH+border2);
 
 			if(settings.contours){
 				if(printVectorInfo){
@@ -802,7 +804,7 @@ bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
 
 	// pack in a texture, algorithm to calculate min w/h from
 	// http://upcommons.upc.edu/pfc/bitstream/2099.1/7720/1/TesiMasterJonas.pdf
-	//ofLogNotice("ofTrueTypeFont") << "loadFont(): areaSum: " << areaSum
+//	ofLogNotice("ofTrueTypeFont") << "loadFont(): areaSum: " << areaSum;
 
 	bool packed = false;
 	float alpha = logf(areaSum)*1.44269f;
@@ -832,7 +834,7 @@ bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
 
 	}
 
-
+//    ofLogNotice("ofTrueTypeFont") << "finish pack. w:" << w << " h:" << h;
 
 	ofPixels atlasPixelsLuminanceAlpha;
 	atlasPixelsLuminanceAlpha.allocate(w,h,OF_PIXELS_GRAY_ALPHA);
@@ -860,24 +862,30 @@ bool ofTrueTypeFont::load(const ofTrueTypeFontSettings & _settings){
 		x+= glyph.tW + border*2;
 	}
 
-	int maxSize;
-	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
-	if(w > maxSize || h > maxSize){
-		ofLogError("ofTruetypeFont") << "Trying to allocate texture of " << w << "x" << h << " which is bigger than supported in current platform: " << maxSize;
-		return false;
-	}else{
-		texAtlas.allocate(atlasPixelsLuminanceAlpha,false);
-		texAtlas.setRGToRGBASwizzles(true);
+    ofLogNotice("ofTrueTypeFont") << "About to call glGetIntegerv.";
 
-		if(settings.antialiased && settings.fontSize>20){
-			texAtlas.setTextureMinMagFilter(GL_LINEAR,GL_LINEAR);
-		}else{
-			texAtlas.setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
-		}
-		texAtlas.loadData(atlasPixelsLuminanceAlpha);
-		bLoadedOk = true;
-		return true;
-	}
+    return setTexAtlas(w, h, atlasPixelsLuminanceAlpha);
+}
+
+bool ofTrueTypeFont::setTexAtlas(int w, int h, ofPixels atlasPixelsLuminanceAlpha) {
+    int maxSize;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
+    if(w > maxSize || h > maxSize){
+        ofLogError("ofTruetypeFont") << "Trying to allocate texture of " << w << "x" << h << " which is bigger than supported in current platform: " << maxSize;
+        return false;
+    }else{
+        texAtlas.allocate(atlasPixelsLuminanceAlpha,false);
+        texAtlas.setRGToRGBASwizzles(true);
+
+        if(settings.antialiased && settings.fontSize>20){
+            texAtlas.setTextureMinMagFilter(GL_LINEAR,GL_LINEAR);
+        }else{
+            texAtlas.setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
+        }
+        texAtlas.loadData(atlasPixelsLuminanceAlpha);
+        bLoadedOk = true;
+        return true;
+    }
 }
 
 //-----------------------------------------------------------
