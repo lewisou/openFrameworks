@@ -1,45 +1,92 @@
-apply plugin: 'com.android.model.library'
+apply plugin: 'com.android.library'
 
-model {
-    android {
-        compileSdkVersion = 25
-        buildToolsVersion = "25.0.3"
-        defaultConfig.with {
-            minSdkVersion.apiLevel 23
-            targetSdkVersion.apiLevel 25
-            versionCode 1
-            versionName "1.0"
-        }
+buildscript {
+    repositories {
+        google()
+        jcenter()
+
     }
-    android.sources {
-        main {
-            manifest {
-                source {
-                    srcDirs = [ "." ]
-                }
-            }
-            res {
-                source {
-                    srcDirs = [ "res" ]
-                }
-            }
-            assets {
-                source {
-                    srcDirs = [ "assets" ]
-                }
-            }
-            java {
-                source {
-                    srcDirs = [ "src" ]
-                }
-            }
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+    }
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        minSdkVersion 25
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // Tells Gradle to build outputs for the following ABIs and package
+            // them into your APK.
+            abiFilters 'armeabi-v7a'
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11",
+                            "-Wall",
+                            "-frtti",
+                            "-fexceptions",
+                            "-nostdlib ",
+                            "-fno-short-enums",
+                            "-ffunction-sections",
+                            "-fdata-sections"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = [ "res" ]
+
+            assets.srcDirs = [ "assets" ]
+            java.srcDirs = [ "src" ]
+        }
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
+    externalNativeBuild {
+
+        // Encapsulates your CMake build configurations.
+        cmake {
+            version "3.6.0"
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
+
+        }
+    }
+}
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:25.+'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
-
