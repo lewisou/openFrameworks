@@ -139,26 +139,26 @@ set(head_file_list
 
 add_library(openFrameworks STATIC ${source_list1} ${source_list2} ${source_list3} ${source_list4} ${source_list5} ${source_list6})
 
-target_link_libraries(openFrameworks 
+target_link_libraries(openFrameworks
                         ${lib_list}
-                        ${log-lib}
-                        ${android-lib}
-                        ${OpenSLES-lib}
-                        ${z-lib}
-                        ${GLESv1_CM-lib}
-                        ${GLESv2-lib}
-                        GLESv2
-                        GLESv1_CM
-                        OpenSLES
-                        )
+                        ${log-lib})
+#                        ${android-lib}
+#                        ${OpenSLES-lib}
+#                        ${z-lib}
+#                        ${GLESv1_CM-lib}
+#                        ${GLESv2-lib}
+#                        GLESv2
+#                        GLESv1_CM
+#                        OpenSLES
+#                        )
 
 # target_link_libraries(openFrameworks ${log-lib})
 target_include_directories(openFrameworks PRIVATE ${head_file_list})
 target_include_directories(openFrameworks INTERFACE ${head_file_list})
-
+#
 find_library(log-lib log)
-find_library(android-lib android)
-find_library(OpenSLES-lib OpenSLES)
-find_library(z-lib z)
-find_library(GLESv1_CM-lib GLESv1_CM)
-find_library(GLESv2-lib GLESv2)
+#find_library(android-lib android)
+#find_library(OpenSLES-lib OpenSLES)
+#find_library(z-lib z)
+#find_library(GLESv1_CM-lib GLESv1_CM)
+#find_library(GLESv2-lib GLESv2)
