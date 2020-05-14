@@ -93,7 +93,7 @@ file(GLOB_RECURSE source_list6 "${CMAKE_CURRENT_SOURCE_DIR}/../../../../addons/o
 set(lib_list 
 ${CMAKE_CURRENT_SOURCE_DIR}/../../../freetype/lib/android/${ANDROID_ABI}/libfreetype.a
 ${CMAKE_CURRENT_SOURCE_DIR}/../../../boost/lib/android/${ANDROID_ABI}/libboost_system.a
-${CMAKE_CURRENT_SOURCE_DIR}/../../../boost/lib/android/${ANDROID_ABI}/libboost_filesystem.a
+#${CMAKE_CURRENT_SOURCE_DIR}/../../../boost/lib/android/${ANDROID_ABI}/libboost_filesystem.a
 ${CMAKE_CURRENT_SOURCE_DIR}/../../../curl/lib/android/${ANDROID_ABI}/libcurl.a
 ${CMAKE_CURRENT_SOURCE_DIR}/../../../tess2/lib/android/${ANDROID_ABI}/libtess2.a
 ${CMAKE_CURRENT_SOURCE_DIR}/../../../pugixml/lib/android/${ANDROID_ABI}/libpugixml.a
