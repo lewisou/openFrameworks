@@ -305,8 +305,8 @@ public class OFAndroidLifeCycle
 	{
 		Log.d(TAG, "glStop");
 		OFGLSurfaceView glView = getGLView();
-		if( glView != null )
-			glView.onPause();
+//		if( glView != null )
+//			glView.onPause();
 		
 		pushState(State.stop);
 	}
