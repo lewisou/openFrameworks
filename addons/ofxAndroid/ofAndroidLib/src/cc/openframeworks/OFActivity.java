@@ -73,8 +73,8 @@ public abstract class OFActivity extends Activity{
 	
 	@Override
 	protected void onStop() {
-		super.onStop();
 		OFAndroidLifeCycle.glStop();
+		super.onStop();
 	}
 	
 	@Override
@@ -91,8 +91,8 @@ public abstract class OFActivity extends Activity{
 	}
 	@Override
 	protected void onPause() {
-		super.onPause();
 		OFAndroidLifeCycle.glPause();
+		super.onPause();
 	}
 	@Override
 	protected void onDestroy() {
