@@ -362,7 +362,7 @@ public:
 
     /// \returns current font direction
 	void setDirection(ofTrueTypeFontDirection direction);
-
+	ofTrueTypeFontSettings settings;
 protected:
 	/// \cond INTERNAL
 	virtual bool setTexAtlas(int w, int h, ofPixels pixels);
@@ -400,7 +400,7 @@ protected:
 
 	std::vector<glyphProps> cps; // properties for each character
 
-	ofTrueTypeFontSettings settings;
+
 	std::unordered_map<uint32_t,size_t> glyphIndexMap;
 
 	int getKerning(uint32_t leftC, uint32_t rightC) const;

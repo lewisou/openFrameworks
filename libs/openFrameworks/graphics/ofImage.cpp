@@ -84,7 +84,7 @@ FIBITMAP* getBmpFromPixels(const ofPixels_<PixelType> &pix){
 			memcpy(dst,src,dstStride*height);
 		}
 	} else {
-		ofLogError("ofImage") << "getBmpFromPixels(): unable to get FIBITMAP from ofPixels";
+		ofLogVerbose("ofImage") << "getBmpFromPixels(): unable to get FIBITMAP from ofPixels";
 	}
 
 	// ofPixels are top left, FIBITMAP is bottom left
@@ -154,7 +154,7 @@ void putBmpIntoPixels(FIBITMAP * bmp, ofPixels_<PixelType>& pix, bool swapOnLitt
 	if(bmpBits != nullptr) {
 		pix.setFromAlignedPixels((PixelType*) bmpBits, width, height, pixFormat, pitch);
 	} else {
-		ofLogError("ofImage") << "putBmpIntoPixels(): unable to set ofPixels from FIBITMAP";
+		ofLogVerbose("ofImage") << "putBmpIntoPixels(): unable to set ofPixels from FIBITMAP";
 	}
 
 	if(bmpConverted != nullptr) {

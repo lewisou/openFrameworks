@@ -270,7 +270,7 @@ public class OFAndroidLifeCycleHelper
 				}
 			}
 		});
-		OFAndroid.onStop();
+//		OFAndroid.onDestroy();
 		OFAndroid.unregisterNetworkStateReceiver();
 		
 		OFAndroid.sleepLocked=false;

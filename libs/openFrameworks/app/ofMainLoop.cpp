@@ -102,6 +102,7 @@ void ofMainLoop::run(shared_ptr<ofAppBaseWindow> window, shared_ptr<ofBaseApp> &
 			ofAddListener(ofxAndroidEvents().backPressed,androidApp,&ofxAndroidApp::backPressed,OF_EVENT_ORDER_APP);
 			ofAddListener(ofxAndroidEvents().networkConnected,androidApp,&ofxAndroidApp::networkConnectedEvent,OF_EVENT_ORDER_APP);
 			ofAddListener(ofxAndroidEvents().pause,androidApp,&ofxAndroidApp::pause,OF_EVENT_ORDER_APP);
+			ofAddListener(ofxAndroidEvents().stop,androidApp,&ofxAndroidApp::stop,OF_EVENT_ORDER_APP);
 			ofAddListener(ofxAndroidEvents().resume,androidApp,&ofxAndroidApp::resume,OF_EVENT_ORDER_APP);
 			ofAddListener(ofxAndroidEvents().unloadGL,androidApp,&ofxAndroidApp::unloadGL,OF_EVENT_ORDER_APP);
 			ofAddListener(ofxAndroidEvents().reloadGL,androidApp,&ofxAndroidApp::reloadGL,OF_EVENT_ORDER_APP);
@@ -205,6 +206,7 @@ void ofMainLoop::exit(){
 			ofRemoveListener(ofxAndroidEvents().backPressed,androidApp,&ofxAndroidApp::backPressed,OF_EVENT_ORDER_APP);
 			ofRemoveListener(ofxAndroidEvents().networkConnected,androidApp,&ofxAndroidApp::networkConnectedEvent,OF_EVENT_ORDER_APP);
 			ofRemoveListener(ofxAndroidEvents().pause,androidApp,&ofxAndroidApp::pause,OF_EVENT_ORDER_APP);
+			ofRemoveListener(ofxAndroidEvents().stop,androidApp,&ofxAndroidApp::stop,OF_EVENT_ORDER_APP);
 			ofRemoveListener(ofxAndroidEvents().resume,androidApp,&ofxAndroidApp::resume,OF_EVENT_ORDER_APP);
 			ofRemoveListener(ofxAndroidEvents().unloadGL,androidApp,&ofxAndroidApp::unloadGL,OF_EVENT_ORDER_APP);
 			ofRemoveListener(ofxAndroidEvents().reloadGL,androidApp,&ofxAndroidApp::reloadGL,OF_EVENT_ORDER_APP);
