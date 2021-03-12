@@ -24,9 +24,14 @@ public abstract class OFActivity extends Activity{
 		return mOFGlSurfaceContainer;
 	}
 	
-	public void initView(){  
+	public void initView(){
+
 		String packageName = this.getPackageName();
-        try {
+
+		// Fix for multi-flavors App
+		packageName = this.getClass().getPackage().getName();
+
+		try {
         	Log.v("OF","trying to find class: "+packageName+".R$layout");
 			Class<?> layout = Class.forName(packageName+".R$layout");
 			View view = this.getLayoutInflater().inflate(layout.getField("main_layout").getInt(null),null);
