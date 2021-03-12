@@ -73,11 +73,15 @@ public abstract class OFActivity extends Activity{
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		OFAndroidLifeCycle.setActivity(this);
 		OFAndroidLifeCycle.glStart();
+		OFAndroidLifeCycle.glResume(mOFGlSurfaceContainer);
 	}
 	
 	@Override
 	protected void onStop() {
+		OFAndroidLifeCycle.glPause();
 		OFAndroidLifeCycle.glStop();
 		super.onStop();
 	}
@@ -91,12 +95,11 @@ public abstract class OFActivity extends Activity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		OFAndroidLifeCycle.setActivity(this);
-		OFAndroidLifeCycle.glResume(mOFGlSurfaceContainer);
+
 	}
 	@Override
 	protected void onPause() {
-		OFAndroidLifeCycle.glPause();
+
 		super.onPause();
 	}
 	@Override
